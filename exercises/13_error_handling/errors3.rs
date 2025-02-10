@@ -9,13 +9,12 @@ fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
     let processing_fee = 1;
     let cost_per_item = 5;
     let qty = item_quantity.parse::<i32>()?;
-
     Ok(qty * cost_per_item + processing_fee)
 }
 
 // TODO: Fix the compiler error by changing the signature and body of the
 // `main` function.
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut tokens = 100;
     let pretend_user_input = "8";
 
@@ -24,8 +23,10 @@ fn main() {
 
     if cost > tokens {
         println!("You can't afford that many!");
+        Err("Not enough tokens".into())
     } else {
         tokens -= cost;
         println!("You now have {tokens} tokens.");
+        Ok(())
     }
 }
